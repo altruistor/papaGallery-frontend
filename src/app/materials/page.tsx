@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 
 type PdfDocument = {
   url: string;
-  [key: string]: any; // or add more fields if you know them
+  [key: string]: unknown; // or add more fields if you know them
 };
 
 const MaterialsPage = () => {
