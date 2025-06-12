@@ -57,13 +57,13 @@ const BirdAnimation = () => {
         return;
       }
       let interval: NodeJS.Timeout;
-      if (peckCount > 0 && peckCount < 6) {
+      if (peckCount > 0 && peckCount < 9) {
         interval = setInterval(() => {
           setFrame((prev) => (prev + 1) % frames.length);
           setPeckCount((prev) => prev + 1);
         }, 120);
       }
-      if (peckCount >= 5) {
+      if (peckCount >= 7) {
         setPeckCount(0);
         setFrame(0);
       }
