@@ -48,7 +48,7 @@ const MaterialsPage = () => {
     <>
       <Navbar />
       <PageTransition>
-        <main className="flex flex-col items-center min-h-screen pt-16 px-4 bg-gray-50">
+        <main className="flex flex-col items-center min-h-screen pt-16 px-4">
           <h1 className="text-3xl font-bold py-5 text-center text-gray-800">
             Статьи, публикации и научная деятельность
           </h1>
