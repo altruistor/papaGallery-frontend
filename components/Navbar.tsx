@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const frames = ["/eyeBirdFrame1.png", "/eyeBirdFrame2.png"];
@@ -76,11 +76,13 @@ const BirdAnimation = () => {
     };
   
     return (
-      <img
+      <Image
         src={frames[frame]}
         alt="Bird pecking"
         className="w-10 h-10 cursor-pointer"
-        draggable={false}
+            draggable={false}
+            width={40}
+      height={40}
         onMouseEnter={startPecking}
         onTouchStart={startPecking}
       />
