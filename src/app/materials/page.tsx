@@ -5,8 +5,13 @@ import Footer from "../../../components/Footer";
 import PageTransition from "../../../components/PageTransition";
 import Button from "../../../components/Button";
 
+type PdfDocument = {
+  url: string;
+  [key: string]: any; // or add more fields if you know them
+};
+
 const MaterialsPage = () => {
-  const [materials, setMaterials] = useState([]);
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
@@ -29,6 +34,16 @@ const MaterialsPage = () => {
     });
   };
 
+  const [materials, setMaterials] = useState<
+  {
+    id: number;
+    Name: string;
+    Description: string;
+    publishedAt?: string;
+    pdfDocument?: PdfDocument[];
+  }[]
+>([]);
+
   return (
     <>
       <Navbar />
@@ -46,11 +61,10 @@ const MaterialsPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
             {materials.map((material) => {
-              const { id, Name, Description, pdfDocument, publishedAt } = material;
-              const pdf = pdfDocument?.[0];
-              const pdfUrl = pdf?.url
-                ? `${apiUrl}${pdf.url}`
-                : null;
+            
+            const { id, Name, Description, pdfDocument, publishedAt } = material;
+            const pdf = pdfDocument?.[0] as PdfDocument | undefined;
+            const pdfUrl = pdf?.url ? `${apiUrl}${pdf.url}` : null;
 
               return (
                 <div
