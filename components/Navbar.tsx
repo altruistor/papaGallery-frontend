@@ -63,7 +63,7 @@ const BirdAnimation = () => {
           setPeckCount((prev) => prev + 1);
         }, 120);
       }
-      if (peckCount >= 6) {
+      if (peckCount >= 5) {
         setPeckCount(0);
         setFrame(0);
       }
