@@ -14,6 +14,22 @@ type GalleryImage = {
   fullUrl: string;
 };
 
+type GalleryImageApiItem = {
+    id: number;
+    Name: string;
+    Alt: string;
+    Description: string;
+    Category: string;
+    Image?: {
+      url?: string;
+      formats?: {
+        medium?: {
+          url?: string;
+        };
+      };
+    };
+  };
+
 const AnimatedCard = ({
   img,
   onClick,
@@ -63,7 +79,7 @@ const Gallery = () => {
         setImages([]);
         return;
       }
-      const images = data.data.map((item: any) => ({
+      const images = data.data.map((item: GalleryImageApiItem) => ({
         id: item.id,
         title: item.Name,
         alt: item.Alt,
