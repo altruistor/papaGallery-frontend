@@ -7,44 +7,86 @@ import { useState, useEffect } from "react";
 
 const frames = ["/eyeBirdFrame1.png", "/eyeBirdFrame2.png"];
 
+// const BirdAnimation = () => {
+//     const [frame, setFrame] = useState(0);
+//     const [peckCount, setPeckCount] = useState(0);
+  
+//     useEffect(() => {
+//       let interval: NodeJS.Timeout;
+//       let timeout: NodeJS.Timeout;
+  
+//       if (peckCount < 6) {
+//         interval = setInterval(() => {
+//           setFrame((prev) => (prev + 1) % frames.length);
+//           setPeckCount((prev) => prev + 1);
+//         }, 350);
+//       } else {
+//         timeout = setTimeout(() => {
+//           setPeckCount(0);
+//         }, 60000);
+//       }
+  
+//       return () => {
+//         clearInterval(interval);
+//         clearTimeout(timeout);
+//       };
+//     }, [peckCount]);
+  
+//     useEffect(() => {
+//       if (peckCount === 0) setFrame(0);
+//     }, [peckCount]);
+  
+//     return (
+//       <img
+//         src={frames[frame]}
+//         alt="Bird pecking"
+//         className="w-10 h-10"
+//         draggable={false}
+//       />
+//     );
+//   };
+
 const BirdAnimation = () => {
     const [frame, setFrame] = useState(0);
     const [peckCount, setPeckCount] = useState(0);
   
+    // Pecking logic: animate 6 times when triggered
     useEffect(() => {
+      if (peckCount === 0) {
+        setFrame(0);
+        return;
+      }
       let interval: NodeJS.Timeout;
-      let timeout: NodeJS.Timeout;
-  
-      if (peckCount < 6) {
+      if (peckCount > 0 && peckCount < 6) {
         interval = setInterval(() => {
           setFrame((prev) => (prev + 1) % frames.length);
           setPeckCount((prev) => prev + 1);
-        }, 350);
-      } else {
-        timeout = setTimeout(() => {
-          setPeckCount(0);
-        }, 60000);
+        }, 120);
       }
-  
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timeout);
-      };
+      if (peckCount >= 6) {
+        setPeckCount(0);
+        setFrame(0);
+      }
+      return () => clearInterval(interval);
     }, [peckCount]);
   
-    useEffect(() => {
-      if (peckCount === 0) setFrame(0);
-    }, [peckCount]);
+    // Handler to start pecking
+    const startPecking = () => {
+      if (peckCount === 0) setPeckCount(1);
+    };
   
     return (
       <img
         src={frames[frame]}
         alt="Bird pecking"
-        className="w-10 h-10"
+        className="w-10 h-10 cursor-pointer"
         draggable={false}
+        onMouseEnter={startPecking}
+        onTouchStart={startPecking}
       />
     );
   };
+
 
   const Navbar = () => {
     const pathname = usePathname();
