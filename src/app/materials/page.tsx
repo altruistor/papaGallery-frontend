@@ -49,10 +49,10 @@ const MaterialsPage = () => {
       <Navbar />
       <PageTransition>
         <main className="flex flex-col items-center min-h-screen pt-16 px-4">
-          <h1 className="text-3xl font-bold py-5 text-center text-gray-800">
+          <h1 className="text-3xl text-center font-bold py-5">
             Статьи, публикации и научная деятельность
           </h1>
-          <div className="mt-2 w-full max-w-3xl text-center mb-10 text-gray-600">
+          <div className="mt-8 mb-8 w-full max-w-2xl text-center pl-4 pr-4">
             <p>
               Ниже представлены статьи о криптографии, а также публикации Игоря
               Корякова в научных журналах и конференциях.

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aos": "^2.3.4",
+    "font": "^0.0.4",
     "framer-motion": "^12.16.0",
     "next": "15.3.3",
     "react": "^19.0.0",

@@ -35,7 +35,7 @@ const HomePage = () => (
 </div>
       </main>
       </PageTransition>
-    <Footer className="fixed bottom-0 left-0 w-full" />
+    <Footer />
   </>
 );
 
