@@ -4,6 +4,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import { useEffect } from "react";
 
 type GalleryProps = {
   images: GalleryImageApiItem[];
@@ -36,6 +37,11 @@ type GalleryImageApiItem = {
   };
 };
 
+
+
+// ...inside Gallery component...
+
+
 const AnimatedCard = ({
   img,
   onClick,
@@ -44,7 +50,9 @@ const AnimatedCard = ({
   onClick: () => void;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
+    
+
 
   return (
     <motion.div
@@ -91,20 +99,35 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
       : "",
   }));
 
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
+    
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [touchStartX, setTouchStartX] = useState<number | null>(null);
+    const filteredImages =
+    selectedCategory === "all"
+      ? images
+      : images.filter((img) => img.category === selectedCategory);
+
+    useEffect(() => {
+        if (selectedIndex === null) return;
+        const handler = (e: KeyboardEvent) => {
+          if (e.key === "ArrowLeft" && selectedIndex > 0) setSelectedIndex(selectedIndex - 1);
+          if (e.key === "ArrowRight" && selectedIndex < filteredImages.length - 1) setSelectedIndex(selectedIndex + 1);
+          if (e.key === "Escape") setSelectedIndex(null);
+        };
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
+      }, [selectedIndex, filteredImages.length]);
+    
+    
   // Get unique categories
   const categories = [
     "all",
     ...Array.from(new Set(images.map((img) => img.category).filter(Boolean))),
   ];
 
-  // Filter images by selected category
-  const filteredImages =
-    selectedCategory === "all"
-      ? images
-      : images.filter((img) => img.category === selectedCategory);
+
 
   return (
     <>
@@ -126,28 +149,67 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
       </div>
 
       <div className="columns-2 lg:columns-3 gap-4 space-y-4 pl-2 pr-2">
-        {filteredImages.map((img) =>
+        {filteredImages.map((img, idx) =>
           img.thumbnailUrl ? (
             <AnimatedCard
               key={img.id}
               img={img}
-              onClick={() => setSelectedImage(img)}
+              onClick={() => setSelectedIndex(idx)}
             />
           ) : null
         )}
-      </div>
+          </div>
+          
+           {/* Modal for selected image starts */}
 
-      {selectedImage && (
+      {selectedIndex !== null && (
         <div
           className="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50"
-          onClick={() => setSelectedImage(null)}
-        >
+                  onClick={() => setSelectedIndex(null)}
+                  onTouchStart={e => setTouchStartX(e.touches[0].clientX)}
+  onTouchEnd={e => {
+    if (touchStartX === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    if (deltaX > 50 && selectedIndex > 0) setSelectedIndex(selectedIndex - 1);
+    if (deltaX < -50 && selectedIndex < filteredImages.length - 1) setSelectedIndex(selectedIndex + 1);
+    setTouchStartX(null);
+  }}
+                  
+              >
+                  
+                  {/* Left Arrow */}
+    {selectedIndex > 0 && (
+      <button
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl"
+        onClick={e => {
+          e.stopPropagation();
+          setSelectedIndex(selectedIndex - 1);
+        }}
+        aria-label="Previous"
+      >
+        &#8592;
+      </button>
+    )}
+
+    {/* Right Arrow */}
+    {selectedIndex < filteredImages.length - 1 && (
+      <button
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl"
+        onClick={e => {
+          e.stopPropagation();
+          setSelectedIndex(selectedIndex + 1);
+        }}
+        aria-label="Next"
+      >
+        &#8594;
+      </button>
+    )}
           {/* Close button */}
           <button
             className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
             onClick={(e) => {
               e.stopPropagation();
-              setSelectedImage(null);
+              setSelectedIndex(null);
             }}
             aria-label="Close"
           >
@@ -156,8 +218,8 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
 
           <Zoom>
             <Image
-              src={selectedImage.fullUrl}
-              alt={selectedImage.alt || selectedImage.title}
+               src={filteredImages[selectedIndex].fullUrl}
+               alt={filteredImages[selectedIndex].alt || filteredImages[selectedIndex].title}
               width={1920}
               height={1080}
               className="max-h-[80vh] rounded shadow-lg"
@@ -172,13 +234,16 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
               onClick={(e) => e.stopPropagation()}
             />
           </Zoom>
-          <div className="mt-4 text-white text-lg max-w-2xl text-center px-4">
-            {selectedImage.description}
+          <div className="mt-4 text-white text-sm max-w-2xl text-center px-4">
+          {filteredImages[selectedIndex].description}
           </div>
         </div>
-      )}
+          )}
+          
+          
     </>
   );
+    
 };
 
 export default Gallery;

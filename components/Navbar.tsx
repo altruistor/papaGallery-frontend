@@ -99,7 +99,7 @@ const BirdAnimation = () => {
           <div className="flex space-x-6 items-center justify-center sm:justify-end w-full sm:pr-6 font-sans text-xs sm:text-sm uppercase">
             <Link
               href="/"
-              className={`text-gray-700 transition-all duration-200 ${
+              className={`text-gray-700 ${
                 pathname === "/" ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
@@ -107,7 +107,7 @@ const BirdAnimation = () => {
             </Link>
             <Link
               href="/gallery"
-              className={`text-gray-700 transition-all duration-200 ${
+              className={`text-gray-700 ${
                 pathname.startsWith("/gallery") ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
@@ -115,7 +115,7 @@ const BirdAnimation = () => {
             </Link>
             <Link
               href="/materials"
-              className={`text-gray-700 transition-all duration-200 ${
+              className={`text-gray-700 ${
                 pathname.startsWith("/materials") ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
