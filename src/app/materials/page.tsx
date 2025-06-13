@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
-import PageTransition from "../../../components/PageTransition";
+
 import Button from "../../../components/Button";
 
 type PdfDocument = {
@@ -46,8 +44,8 @@ const MaterialsPage = () => {
 
   return (
     <>
-      <Navbar />
-      <PageTransition>
+
+     
         <main className="flex flex-col items-center min-h-screen pt-16 px-4">
           <h1 className="text-3xl text-center font-bold py-5">
             Статьи, публикации и научная деятельность
@@ -132,8 +130,8 @@ const MaterialsPage = () => {
             })}
           </div>
         </main>
-      </PageTransition>
-      <Footer />
+
+
     </>
   );
 };

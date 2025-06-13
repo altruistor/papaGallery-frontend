@@ -1,9 +1,14 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
-import Image  from "next/image";
+import Image from "next/image";
+
+type GalleryProps = {
+  images: GalleryImageApiItem[];
+  apiUrl: string;
+};
 
 type GalleryImage = {
   id: number;
@@ -16,20 +21,20 @@ type GalleryImage = {
 };
 
 type GalleryImageApiItem = {
-    id: number;
-    Name: string;
-    Alt: string;
-    Description: string;
-    Category: string;
-    Image?: {
-      url?: string;
-      formats?: {
-        medium?: {
-          url?: string;
-        };
+  id: number;
+  Name: string;
+  Alt: string;
+  Description: string;
+  Category: string;
+  Image?: {
+    url?: string;
+    formats?: {
+      medium?: {
+        url?: string;
       };
     };
   };
+};
 
 const AnimatedCard = ({
   img,
@@ -49,9 +54,9 @@ const AnimatedCard = ({
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
     >
-          <Image
-              width={400}
-              height={300}
+      <Image
+        width={400}
+        height={300}
         src={img.thumbnailUrl}
         alt={img.alt || img.title}
         className="w-full h-auto object-cover cursor-pointer"
@@ -66,39 +71,28 @@ const AnimatedCard = ({
   );
 };
 
-const Gallery = () => {
-  const [images, setImages] = useState<GalleryImage[]>([]);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-    const [selectedCategory, setSelectedCategory] = useState<string>("all");
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
+  // Convert API images to GalleryImage[]
+  const images: GalleryImage[] = apiImages.map((item) => ({
+    id: item.id,
+    title: item.Name,
+    alt: item.Alt,
+    description: item.Description,
+    category: item.Category,
+    thumbnailUrl: item.Image?.formats?.medium?.url
+      ? item.Image.formats.medium.url.startsWith("http")
+        ? item.Image.formats.medium.url
+        : apiUrl + item.Image.formats.medium.url
+      : "",
+    fullUrl: item.Image?.url
+      ? item.Image.url.startsWith("http")
+        ? item.Image.url
+        : apiUrl + item.Image.url
+      : "",
+  }));
 
-  useEffect(() => {
-      const fetchImages = async () => {
-          const res = await fetch(
-          `${apiUrl}/api/gallery-images?populate=Image`
-      );
-      const data = await res.json();
-      if (!data.data) {
-        setImages([]);
-        return;
-      }
-      const images = data.data.map((item: GalleryImageApiItem) => ({
-        id: item.id,
-        title: item.Name,
-        alt: item.Alt,
-        description: item.Description,
-        category: item.Category,
-        thumbnailUrl: item.Image?.formats?.medium?.url
-          ? apiUrl + item.Image.formats.medium.url
-          : "",
-        fullUrl: item.Image?.url
-          ? apiUrl + item.Image.url
-          : "",
-      }));
-      setImages(images);
-    };
-    fetchImages();
-  }, []);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   // Get unique categories
   const categories = [
@@ -162,20 +156,19 @@ const Gallery = () => {
 
           <Zoom>
             <Image
-                          
               src={selectedImage.fullUrl}
-                          alt={selectedImage.alt || selectedImage.title}
-                          width={1920} // or a large value
-    height={1080} // or a large value
-                          className="max-h-[80vh] rounded shadow-lg"
-                          style={{
-                            width: "auto",
-                            height: "auto",
-                            maxWidth: "100%",
-                            maxHeight: "80vh",
-                            display: "block",
-                            margin: "0 auto",
-                          }}
+              alt={selectedImage.alt || selectedImage.title}
+              width={1920}
+              height={1080}
+              className="max-h-[80vh] rounded shadow-lg"
+              style={{
+                width: "auto",
+                height: "auto",
+                maxWidth: "100%",
+                maxHeight: "80vh",
+                display: "block",
+                margin: "0 auto",
+              }}
               onClick={(e) => e.stopPropagation()}
             />
           </Zoom>
