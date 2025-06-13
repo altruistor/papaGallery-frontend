@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
+import Image  from "next/image";
 
 type GalleryImage = {
   id: number;
@@ -48,7 +49,9 @@ const AnimatedCard = ({
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
     >
-      <img
+          <Image
+              width={400}
+              height={300}
         src={img.thumbnailUrl}
         alt={img.alt || img.title}
         className="w-full h-auto object-cover cursor-pointer"
@@ -158,10 +161,21 @@ const Gallery = () => {
           </button>
 
           <Zoom>
-            <img
+            <Image
+                          
               src={selectedImage.fullUrl}
-              alt={selectedImage.alt || selectedImage.title}
-              className="max-h-[80vh] rounded shadow-lg"
+                          alt={selectedImage.alt || selectedImage.title}
+                          width={1920} // or a large value
+    height={1080} // or a large value
+                          className="max-h-[80vh] rounded shadow-lg"
+                          style={{
+                            width: "auto",
+                            height: "auto",
+                            maxWidth: "100%",
+                            maxHeight: "80vh",
+                            display: "block",
+                            margin: "0 auto",
+                          }}
               onClick={(e) => e.stopPropagation()}
             />
           </Zoom>
