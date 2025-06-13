@@ -4,7 +4,7 @@ const HomePage = () => {
  return (
   <>
     <div
-      className="fade-in fixed inset-0 w-full h-full bg-fixed bg-center bg-cover -z-10"
+      className="fade-in fixed inset-0 w-full h-full bg-center bg-cover -z-10"
       style={{ backgroundImage: "url('/DSC02789.jpg')" }}
     />
     <main className="relative min-h-screen flex flex-col">
