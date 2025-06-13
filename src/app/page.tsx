@@ -1,9 +1,10 @@
 import React from "react";
 
-const HomePage = () => (
+const HomePage = () => {
+ return (
   <>
     <div
-      className="fixed inset-0 w-full h-full bg-fixed bg-center bg-cover -z-10"
+      className="fade-in fixed inset-0 w-full h-full bg-fixed bg-center bg-cover -z-10"
       style={{ backgroundImage: "url('/DSC02789.jpg')" }}
     />
     <main className="relative min-h-screen flex flex-col">
@@ -28,7 +29,8 @@ const HomePage = () => (
         </div>
       </div>
     </main>
-  </>
-);
+</>
+  );
+};
 
 export default HomePage;

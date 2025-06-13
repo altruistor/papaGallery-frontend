@@ -46,7 +46,7 @@ const MaterialsPage = () => {
     <>
 
      
-        <main className="flex flex-col items-center min-h-screen pt-16 px-4">
+        <main className="fade-in flex flex-col items-center min-h-screen pt-16 px-4">
           <h1 className="text-3xl text-center font-bold py-5">
             Статьи, публикации и научная деятельность
           </h1>

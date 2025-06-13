@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Navbar />
-        <main className="page-fade">{children}</main>
+        <main className="fadein">{children}</main>
         <Footer />
       </body>
     </html>
