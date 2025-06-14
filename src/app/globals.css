@@ -46,3 +46,33 @@ body {
     transform: translateY(0);
   }
 }
+
+
+.arrow-left,
+.arrow-right {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: solid white;
+  border-width: 0 6px 6px 0;
+  padding: 4px;
+}
+
+.arrow-left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.arrow-right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.arrow-shape {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: solid white;
+  border-width: 0 6px 6px 0;
+  padding: 4px;
+}

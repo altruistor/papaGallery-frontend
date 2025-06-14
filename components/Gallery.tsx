@@ -164,7 +164,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
 
       {selectedIndex !== null && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50"
+          className="fixed inset-0 bg-gray-700 bg-opacity-60 flex flex-col items-center justify-center z-50"
                   onClick={() => setSelectedIndex(null)}
                   onTouchStart={e => setTouchStartX(e.touches[0].clientX)}
   onTouchEnd={e => {
@@ -178,32 +178,33 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
               >
                   
                   {/* Left Arrow */}
-    {selectedIndex > 0 && (
-      <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl"
-        onClick={e => {
-          e.stopPropagation();
-          setSelectedIndex(selectedIndex - 1);
-        }}
-        aria-label="Previous"
-      >
-        &#8592;
-      </button>
-    )}
+                  {selectedIndex > 0 && (
+  <button
+  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
+  onClick={e => {
+    e.stopPropagation();
+    setSelectedIndex(selectedIndex - 1);
+  }}
+  aria-label="Previous"
+  style={{ outline: "none", border: "none" }}
+>
+  <span className="arrow-shape arrow-left" />
+</button>
+)}
 
-    {/* Right Arrow */}
-    {selectedIndex < filteredImages.length - 1 && (
-      <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl"
-        onClick={e => {
-          e.stopPropagation();
-          setSelectedIndex(selectedIndex + 1);
-        }}
-        aria-label="Next"
-      >
-        &#8594;
-      </button>
-    )}
+{selectedIndex < filteredImages.length - 1 && (
+  <button
+  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
+  onClick={e => {
+    e.stopPropagation();
+    setSelectedIndex(selectedIndex + 1);
+  }}
+  aria-label="Next"
+  style={{ outline: "none", border: "none" }}
+>
+  <span className="arrow-shape arrow-right" />
+</button>
+)}
           {/* Close button */}
           <button
             className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
