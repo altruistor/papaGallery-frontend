@@ -10,11 +10,14 @@ async function getImages(apiUrl: string, locale: string) {
 }
 
 export default async function GalleryPage({ params }: { params: { locale: string } }) {
+  const resolvedParams = await params;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
-  const images = await getImages(apiUrl, params.locale);
+  const images = await getImages(apiUrl, resolvedParams.locale);
+
+  const t = await getTranslations({ locale: resolvedParams.locale });
 
   // Use getTranslations for server components
-  const t = await getTranslations({ locale: params.locale });
+ 
 
   return (
     <main className="flex flex-col items-center min-h-screen pt-16">

@@ -1,8 +1,9 @@
-"use client";
+
 import { useTranslations } from "next-intl";
 
 export default function HomePage() {
   const t = useTranslations("home-page");
+
 
   return (
     <>
@@ -25,6 +26,8 @@ export default function HomePage() {
             <p className="text-xs mb-2 text-white font-sans text-start sm:text-end">
               {t("bio2")}
             </p>
+            {/* Example usage of locale if needed */}
+            {/* <p>Current locale: {locale}</p> */}
           </div>
         </div>
       </main>

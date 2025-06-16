@@ -27,14 +27,14 @@ export default async function LocaleLayout({
   console.log("Loaded messages for locale:", locale, messages); // <--- ADD THIS LINE
 
   return (
-    <html lang={locale}>
-      <body className="antialiased">
+    <>
+      
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar />
           <main className="fadein">{children}</main>
           <Footer />
         </NextIntlClientProvider>
-      </body>
-    </html>
+      
+    </>
   );
 }
