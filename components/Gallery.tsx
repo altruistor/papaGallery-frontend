@@ -5,6 +5,7 @@ import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 type GalleryProps = {
   images: GalleryImageApiItem[];
@@ -81,6 +82,7 @@ const AnimatedCard = ({
 
 const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   // Convert API images to GalleryImage[]
+  const t = useTranslations();
   const images: GalleryImage[] = apiImages.map((item) => ({
     id: item.id,
     title: item.Name,
@@ -143,7 +145,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
             }`}
             onClick={() => setSelectedCategory(category)}
           >
-            {category === "all" ? "Все" : category}
+            {category === "all" ? t("all") : t(`categories.${category}`)}
           </button>
         ))}
       </div>

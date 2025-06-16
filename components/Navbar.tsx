@@ -2,10 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const frames = ["/eyeBirdFrame1.png", "/eyeBirdFrame2.png"];
+
+
 
 // const BirdAnimation = () => {
 //     const [frame, setFrame] = useState(0);
@@ -92,35 +96,38 @@ const BirdAnimation = () => {
 
   const Navbar = () => {
     const pathname = usePathname();
+    const locale = pathname.split("/")[1] || "ru";
+    const t = useTranslations("nav");
   
     return (
       <nav className="fixed top-0 w-full bg-white/60 backdrop-blur-md shadow z-50">
         <div className="max-w-4xl mx-auto flex items-center h-16">
           <div className="flex space-x-6 items-center justify-center sm:justify-end w-full sm:pr-6 font-sans text-xs sm:text-sm uppercase">
             <Link
-              href="/"
+              href={`/${locale}/`}
               className={`text-gray-700 ${
-                pathname === "/" ? "font-semibold" : "hover:text-gray-500"
+                pathname === `/${locale}` || pathname === `/${locale}/` ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
-              Заглавная
+               {t("home")}
             </Link>
             <Link
-              href="/gallery"
+              href={`/${locale}/gallery`}
               className={`text-gray-700 ${
-                pathname.startsWith("/gallery") ? "font-semibold" : "hover:text-gray-500"
+                pathname.startsWith(`/${locale}/gallery`) ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
-              Галлерея
+              {t("gallery")}
             </Link>
             <Link
-              href="/materials"
+              href={`/${locale}/materials`}
               className={`text-gray-700 ${
-                pathname.startsWith("/materials") ? "font-semibold" : "hover:text-gray-500"
+                pathname.startsWith(`/${locale}/materials`) ? "font-semibold" : "hover:text-gray-500"
               }`}
             >
-              Материалы
+              {t("materials")}
             </Link>
+            <LanguageSwitcher />
             <BirdAnimation />
           </div>
         </div>

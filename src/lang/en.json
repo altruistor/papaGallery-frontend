@@ -1,0 +1,26 @@
+{
+  "home-page": {
+    "title": "Igor Koryakov",
+    "subtitle": "Artist, painter, visioner, invertor",
+    "bio1": "Developed electronic equipment for 28 years in the Army 26 years after",
+    "bio2": "Fan of pencil graphics with inventions"
+  },
+    "nav": {
+      "home": "Home",
+      "gallery": "Gallery",
+      "materials": "Materials"
+    },
+
+  "gallery-page": {
+    "title": "Art gallery.",
+    "subtitle": "Selected works by Igor Koryakov, created in various graphic techniques"
+  },
+  
+  "category": {
+    "graphics": "Graphics",
+    "pyrography": "Pyrography",
+    "painting": "Painting"
+  },
+  "all": "All"
+    
+  }
