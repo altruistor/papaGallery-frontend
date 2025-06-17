@@ -24,7 +24,7 @@ export default function LanguageSwitcher() {
         <button
           key={code}
           onClick={() => handleSwitch(code)}
-          className="px-2 py-1 rounded border text-xs bg-white/80 hover:bg-gray-200"
+          className="px-2 py-1 rounded border text-xs hover:bg-gray-200"
         >
           {label}
         </button>
