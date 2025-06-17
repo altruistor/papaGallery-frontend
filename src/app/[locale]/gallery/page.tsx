@@ -9,15 +9,12 @@ async function getImages(apiUrl: string, locale: string) {
   return data.data;
 }
 
-export default async function GalleryPage({ params }: { params: { locale: string } }) {
-  const resolvedParams = await params;
+export default async function GalleryPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
-  const images = await getImages(apiUrl, resolvedParams.locale);
+  const images = await getImages(apiUrl, locale);
 
-  const t = await getTranslations({ locale: resolvedParams.locale });
-
-  // Use getTranslations for server components
- 
+  const t = await getTranslations({ locale });
 
   return (
     <main className="flex flex-col items-center min-h-screen pt-16">
