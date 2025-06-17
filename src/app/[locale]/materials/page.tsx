@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 
 import Button from "../../../../components/Button";
+import { useTranslations } from "next-intl";
+
 
 type PdfDocument = {
   url: string;
@@ -9,6 +11,8 @@ type PdfDocument = {
 };
 
 const MaterialsPage = () => {
+
+  const t = useTranslations("materials-page");
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -48,12 +52,11 @@ const MaterialsPage = () => {
      
         <main className="fade-in flex flex-col items-center min-h-screen pt-16 px-4">
           <h1 className="text-3xl text-center font-bold py-5">
-            Статьи, публикации и научная деятельность
+            {t("title")}
           </h1>
           <div className="mt-8 mb-8 w-full max-w-2xl text-center pl-4 pr-4">
             <p>
-              Ниже представлены статьи о криптографии, а также публикации Игоря
-              Корякова в научных журналах и конференциях.
+              {t("subtitle")}
             </p>
           </div>
 

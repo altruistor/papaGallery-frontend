@@ -11,7 +11,7 @@
     "materials": "Materials"
   },
   "gallery-page": {
-    "title": "Art gallery.",
+    "title": "Art gallery",
     "subtitle": "Selected works by Igor Koryakov, created in various graphic techniques"
   },
   "category": {
@@ -19,5 +19,9 @@
     "pyrography": "Pyrography",
     "painting": "Painting"
   },
-  "all": "All"
+  "all": "All",
+  "materials-page": {
+    "title": "Articles, publications and scientific activities",
+    "subtitle": "Below are articles on cryptography, as well as publications by Igor Koryakov in scientific journals and conferences"
+  }
 }
