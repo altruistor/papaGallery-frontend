@@ -8,10 +8,22 @@ const nextConfig: NextConfig = {
     domains: [
       "strapi-backend-ancient-darkness-4407.fly.dev",
       "res.cloudinary.com",
-      // add other domains if needed
     ],
   },
-  // other config options here
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; img-src 'self' data: https://res.cloudinary.com; media-src 'self' https://res.cloudinary.com; script-src 'self'; style-src 'self' 'unsafe-inline';",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
