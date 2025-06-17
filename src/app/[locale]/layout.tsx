@@ -24,7 +24,7 @@ export default async function LocaleLayout({
     // Optionally handle missing locale/messages
   }
 
-  console.log("Loaded messages for locale:", locale, messages); // <--- ADD THIS LINE
+  // console.log("Loaded messages for locale:", locale, messages); // <--- ADD THIS LINE
 
   return (
     <>
