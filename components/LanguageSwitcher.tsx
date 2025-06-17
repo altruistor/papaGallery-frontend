@@ -1,18 +1,17 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const languages = [
-  { code: "ru", label: "Ру" },
-  { code: "en", label: "En" },
+  { code: "en", label: "EN" },
+  { code: "ru", label: "RU" },
 ];
 
 export default function LanguageSwitcher() {
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
 
   const handleSwitch = (lang: string) => {
-    const segments = pathname.split("/");
-    // segments[0] is "", segments[1] is the locale
     segments[1] = lang;
     const newPath = segments.join("/") || "/";
     router.push(newPath);

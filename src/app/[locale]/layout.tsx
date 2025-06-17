@@ -14,9 +14,9 @@ export default async function LocaleLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>; // <-- Await the params!
 }>) {
-  const { locale } = await params;
+  const { locale } = await params; // <-- Await here!
   let messages = {};
   try {
     messages = (await import(`../../lang/${locale}.json`)).default;
@@ -24,10 +24,12 @@ export default async function LocaleLayout({
     // Optionally handle missing locale/messages
   }
 
+  console.log("Loaded locale/messages:", locale, messages);
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <Navbar />
-      <main className="fadein">{children}</main>
+      {children}
       <Footer />
     </NextIntlClientProvider>
   );

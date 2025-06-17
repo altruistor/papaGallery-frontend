@@ -1,9 +1,10 @@
-
+"use client";
 import { useTranslations } from "next-intl";
 
 export default function HomePage() {
-  const t = useTranslations();
-
+  const t = useTranslations("home-page");
+  console.log("Current locale:", typeof window !== "undefined" ? window.location.pathname.split("/")[1] : "unknown");
+console.log("Title translation:", t("title"));
 
   return (
     <>
@@ -15,16 +16,16 @@ export default function HomePage() {
         <div className="relative z-10 flex flex-1 items-start justify-start mr-30 pl-10 pt-20 sm:pt-20 sm:pl-20">
           <div className="max-w-xl text-left whitespace-break-spaces relative">
             <h1 className="text-4xl text-white text-balance font-sans text-start sm:text-end mb-2">
-              {t("home-page.title")}
+              {t("title")}
             </h1>
             <p className="text-lg mb-2 text-white font-sans text-start sm:text-end">
-              {t("home-page.subtitle")}
+              {t("subtitle")}
             </p>
             <p className="text-xs mb-2 text-white font-sans text-start sm:text-end">
-              {t("home-page.bio1")}
+              {t("bio1")}
             </p>
             <p className="text-xs mb-2 text-white font-sans text-start sm:text-end">
-              {t("home-page.bio2")}
+              {t("bio2")}
             </p>
           </div>
         </div>
