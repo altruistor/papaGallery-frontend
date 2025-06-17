@@ -18,8 +18,8 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
 
   return (
     <main className="flex flex-col items-center min-h-screen pt-16">
-      <h1 className="text-3xl font-bold py-5">{t("gallery-page.title")}</h1>
-      <div className="w-full max-w-2xl text-center pl-4 pr-4">
+      <h1 className="slide-in-left text-3xl font-bold py-5">{t("gallery-page.title")}</h1>
+      <div className="slide-in-left w-full max-w-2xl text-center pl-4 pr-4">
         <p>{t("gallery-page.subtitle")}</p>
       </div>
       <div className="mt-8 w-full max-w-4xl">

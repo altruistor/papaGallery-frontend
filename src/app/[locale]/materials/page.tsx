@@ -50,7 +50,7 @@ const MaterialsPage = () => {
     <>
 
      
-        <main className="fade-in flex flex-col items-center min-h-screen pt-16 px-4">
+        <main className="slide-in-left flex flex-col items-center min-h-screen pt-16 px-4">
           <h1 className="text-3xl text-center font-bold py-5">
             {t("title")}
           </h1>
@@ -70,7 +70,7 @@ const MaterialsPage = () => {
               return (
                 <div
                   key={id}
-                  className="bg-white border border-gray-200 rounded-xl shadow p-6 flex flex-col justify-between"
+                  className="slide-in-bottom bg-white border border-gray-200 rounded-xl shadow p-6 flex flex-col justify-between"
                 >
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900 mb-2">

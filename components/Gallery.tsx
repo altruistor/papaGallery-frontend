@@ -134,7 +134,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   return (
     <>
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-6 justify-center">
+      <div className="slide-in-right flex flex-wrap gap-2 mb-6 justify-center">
         {categories.map((category) => (
           <button
             key={category}

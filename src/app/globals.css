@@ -27,22 +27,69 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.page-fade {
-  animation: fadein 0.5s;
+
+/* animation slide-in */
+
+.slide-in-left {
+  animation: slidein 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
-.fade-in {
-  animation: fadein 0.5s;
-}
-
-@keyframes fadein {
+@keyframes slidein {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+
+    transform: translateX(-32px);
   }
 
   to {
-    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideinright 1.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes slideinright {
+  from {
+
+    transform: translateX(32px);
+  }
+
+  to {
+
+    transform: translateX(0);
+  }
+}
+
+.slide-in-top {
+  animation: slideintop 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes slideintop {
+  from {
+
+    transform: translateY(-32px);
+  }
+
+  to {
+
+    transform: translateY(0);
+  }
+}
+
+.slide-in-bottom {
+  animation: slideinbottom 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes slideinbottom {
+  from {
+
+    transform: translateY(32px);
+  }
+
+  to {
+
     transform: translateY(0);
   }
 }

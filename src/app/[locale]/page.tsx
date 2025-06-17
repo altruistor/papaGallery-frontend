@@ -9,12 +9,12 @@ console.log("Title translation:", t("title"));
   return (
     <>
       <div
-        className="fade-in fixed inset-0 w-full h-full bg-center bg-cover -z-10"
+        className="slide-in-right fixed inset-0 w-full h-full bg-center bg-cover -z-10"
         style={{ backgroundImage: "url('/DSC02789.jpg')" }}
       />
       <main className="relative min-h-screen flex flex-col">
         <div className="relative z-10 flex flex-1 items-start justify-start mr-30 pl-10 pt-20 sm:pt-20 sm:pl-20">
-          <div className="max-w-xl text-left whitespace-break-spaces relative">
+          <div className=" slide-in-left max-w-xl text-left whitespace-break-spaces relative">
             <h1 className="text-4xl text-white text-balance font-sans text-start sm:text-end mb-2">
               {t("title")}
             </h1>
