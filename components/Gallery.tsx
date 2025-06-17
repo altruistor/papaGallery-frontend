@@ -145,7 +145,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
             }`}
             onClick={() => setSelectedCategory(category)}
           >
-            {category === "all" ? t("all") : t(`categories.${category}`)}
+            {category === "all" ? t("all") : t(`category.${category}`)}
           </button>
         ))}
       </div>
