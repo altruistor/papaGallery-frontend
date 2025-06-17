@@ -17,10 +17,10 @@
   },
   
   "category": {
-    "graphics": "Graphics",
-    "pyrography": "Pyrography",
-    "painting": "Painting"
-  },
+  "graphics": "Graphics",
+  "pyrography": "Pyrography",
+  "painting": "Painting"
+},
   "all": "All"
     
   }
