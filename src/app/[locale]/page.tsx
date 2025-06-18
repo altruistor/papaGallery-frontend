@@ -1,16 +1,22 @@
 "use client";
 import { useTranslations } from "next-intl";
+import {useEffect, useState} from "react";
 
 export default function HomePage() {
   const t = useTranslations("home-page");
-  console.log("Current locale:", typeof window !== "undefined" ? window.location.pathname.split("/")[1] : "unknown");
-console.log("Title translation:", t("title"));
+  const [showImage, setShowImage] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowImage(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+  
 
   return (
     <>
+<div className="fixed inset-0 w-full h-full bg-gradient-to-b from-black to-neutral-700 -z-20" />
       <div
-        className="slide-in-right fixed inset-0 w-full h-full bg-center bg-cover -z-10"
-        style={{ backgroundImage: "url('/DSC02789.jpg')" }}
+         className={`fixed inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 -z-10 ${showImage ? "opacity-100" : "opacity-0"}`}
+         style={{ backgroundImage: "url('/DSC02789.jpg')" }}
       />
       <main className="relative min-h-screen flex flex-col">
         <div className="relative z-10 flex flex-1 items-start justify-start mr-30 pl-10 pt-20 sm:pt-20 sm:pl-20">
