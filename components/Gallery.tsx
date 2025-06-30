@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
-import Zoom from "react-medium-image-zoom";
+
 import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 
@@ -83,6 +84,7 @@ const AnimatedCard = ({
 const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   // Convert API images to GalleryImage[]
   const t = useTranslations();
+
   const images: GalleryImage[] = apiImages.map((item) => ({
     id: item.id,
     title: item.Name,
@@ -105,7 +107,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
     
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-    const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
     const filteredImages =
     selectedCategory === "all"
       ? images
@@ -162,20 +164,13 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
         )}
           </div>
           
-           {/* Modal for selected image starts */}
+
 
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 bg-gray-700 bg-opacity-60 flex flex-col items-center justify-center z-50"
-                  onClick={() => setSelectedIndex(null)}
-                  onTouchStart={e => setTouchStartX(e.touches[0].clientX)}
-  onTouchEnd={e => {
-    if (touchStartX === null) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX;
-    if (deltaX > 50 && selectedIndex > 0) setSelectedIndex(selectedIndex - 1);
-    if (deltaX < -50 && selectedIndex < filteredImages.length - 1) setSelectedIndex(selectedIndex + 1);
-    setTouchStartX(null);
-  }}
+
+
                   
               >
                   
@@ -209,23 +204,24 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
 )}
           {/* Close button */}
           <button
-            className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedIndex(null);
-            }}
-            aria-label="Close"
-          >
-            &times;
-          </button>
+  className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
+  onClick={(e) => {
+    e.stopPropagation();
 
-          <Zoom>
+    setSelectedIndex(null);
+  }}
+  aria-label="Close"
+>
+  &times;
+</button>
+
+         
             <Image
-               src={filteredImages[selectedIndex].fullUrl}
-               alt={filteredImages[selectedIndex].alt || filteredImages[selectedIndex].title}
+              src={filteredImages[selectedIndex].fullUrl}
+              alt={filteredImages[selectedIndex].alt || filteredImages[selectedIndex].title}
               width={1920}
               height={1080}
-              className="max-h-[80vh] rounded shadow-lg"
+              className={`max-h-[80vh] rounded shadow-lg transition-transform duration-300`}
               style={{
                 width: "auto",
                 height: "auto",
@@ -234,9 +230,12 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
                 display: "block",
                 margin: "0 auto",
               }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+
+              }}
             />
-          </Zoom>
+       
           <div className="mt-4 text-white text-sm max-w-2xl text-center px-4">
           {filteredImages[selectedIndex].description}
           </div>

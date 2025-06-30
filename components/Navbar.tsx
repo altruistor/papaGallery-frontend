@@ -105,24 +105,24 @@ const BirdAnimation = () => {
           <div className="flex space-x-5 sm:space-x-7 items-center justify-center sm:justify-end w-full sm:pr-6 font-sans text-xs sm:text-sm uppercase">
             <Link
               href={`/${locale}/`}
-              className={`text-gray-700 ${
-                pathname === `/${locale}` || pathname === `/${locale}/` ? "font-semibold" : "hover:text-gray-500"
+              className={`text-black hover:gray-700 ${
+                pathname === `/${locale}` || pathname === `/${locale}/` ? "font-semibold text-black" : "hover:gray-700"
               }`}
             >
                {t("home")}
             </Link>
             <Link
               href={`/${locale}/gallery`}
-              className={`text-gray-700 ${
-                pathname.startsWith(`/${locale}/gallery`) ? "font-semibold" : "hover:text-gray-500" 
+              className={`text-black ${
+                pathname.startsWith(`/${locale}/gallery`) ? "font-semibold text-black" : "hover:gray-700" 
               }`}
             >
               {t("gallery")}
             </Link>
             <Link
               href={`/${locale}/materials`}
-              className={`text-gray-700 ${
-                pathname.startsWith(`/${locale}/materials`) ? "font-semibold" : "hover:text-gray-500"
+              className={`text-black ${
+                pathname.startsWith(`/${locale}/materials`) ? "font-semibold text-black" : "hover:gray-700"
               }`}
             >
               {t("materials")}

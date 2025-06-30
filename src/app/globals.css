@@ -123,3 +123,22 @@ body {
   border-width: 0 6px 6px 0;
   padding: 4px;
 }
+
+/* Prevent zoom modal from closing on touch gestures */
+[data-rmiz-modal-overlay] {
+  pointer-events: none !important;
+}
+
+[data-rmiz-modal-content] {
+  pointer-events: auto !important;
+}
+
+[data-rmiz-modal-img] {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+
+/* Ensure zoom stays open */
+[data-rmiz-modal-overlay]:not([data-rmiz-modal-overlay="hidden"]) {
+  pointer-events: none !important;
+}
