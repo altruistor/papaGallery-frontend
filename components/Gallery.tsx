@@ -152,7 +152,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
         ))}
       </div>
 
-      <div className="columns-2 lg:columns-3 gap-4 space-y-4 pl-2 pr-2">
+      <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 pl-2 pr-2">
         {filteredImages.map((img, idx) =>
           img.thumbnailUrl ? (
             <AnimatedCard
