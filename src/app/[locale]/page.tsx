@@ -31,7 +31,7 @@ export default function HomePage() {
       content: [],
       images: [
         { src: '/IMG_3660.jpeg', alt: t("gallery-image1-alt") },
-        { src: '/IMG_0677.jpeg', alt: t("gallery-image2-alt") }
+        { src: '/IMG_0684.jpeg', alt: t("gallery-image2-alt") }
 
       ]
     },

@@ -194,6 +194,9 @@ export default function Section({
           </div>
         </div>
           )}
+          
+          
+          
           {type === 'fullscreen-gallery' && (
   <>
     {/* Title overlay */}
@@ -210,7 +213,7 @@ export default function Section({
 
     {/* Fullscreen Images Grid */}
     {images.length > 0 && (
-      <div className={`absolute inset-0 grid grid-cols-2 transition-all duration-1000 ${
+      <div className={`absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 transition-all duration-1000 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}>
         {images.map((image, index) => (
