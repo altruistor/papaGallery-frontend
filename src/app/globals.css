@@ -142,3 +142,13 @@ body {
 [data-rmiz-modal-overlay]:not([data-rmiz-modal-overlay="hidden"]) {
   pointer-events: none !important;
 }
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.scroll-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}

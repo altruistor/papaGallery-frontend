@@ -3,7 +3,20 @@
     "title": "Игорь Коряков",
     "subtitle": "Художник, график, изобретатель",
     "bio1": "Разрабатывал электронную технику 28 лет в Армии и 26 лет после неё",
-    "bio2": "Фанат карандашной графики с придумками"
+    "bio2": "Фанат карандашной графики с придумками",
+    "section2-title": "Second Section",
+    "section2-content": "This is the second section with a different background.",
+    "gallery-title": "Photo Gallery",
+    "gallery-content": "A collection of beautiful photographs",
+    "section4-title": "About My Work",
+    "section4-subtitle": "Photography Philosophy",
+    "section4-content1": "Every photograph tells a story.",
+    "section4-content2": "I capture moments that matter.",
+    "section4-content3": "Light and shadow dance together.",
+    "gallery-image1-alt": "Gallery image 1",
+    "gallery-image2-alt": "Gallery image 2",
+    "gallery-image3-alt": "Gallery image 3",
+    "gallery-image4-alt": "Gallery image 4"
   },
     "nav": {
       "home": "Заглавная",

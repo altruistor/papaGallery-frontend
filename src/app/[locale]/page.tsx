@@ -1,41 +1,74 @@
 "use client";
 import { useTranslations } from "next-intl";
-import {useEffect, useState} from "react";
+import Section from "../../../components/HomeSection";
 
 export default function HomePage() {
   const t = useTranslations("home-page");
-  const [showImage, setShowImage] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setShowImage(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-  
+
+  // Define your sections data with translations
+  const sectionsData = [
+    {
+      id: 1,
+      type: 'hero' as const,
+      backgroundImage: '/DSC02789.jpg',
+      title: t("title"),
+      textPosition: 'left' as const,
+      content: [t("subtitle"), t("bio1"), t("bio2")],
+      overlay: false
+    },
+    {
+      id: 2,
+      type: 'content' as const,
+      backgroundImage: '/IMG_5169.jpeg',
+      title: t("section2-title"),
+      content: [t("section2-content")],
+      textPosition: 'center' as const
+    },
+    {
+      id: 3,
+      type: 'fullscreen-gallery' as const,
+      title: '',
+      content: [],
+      images: [
+        { src: '/IMG_3660.jpeg', alt: t("gallery-image1-alt") },
+        { src: '/IMG_0677.jpeg', alt: t("gallery-image2-alt") }
+
+      ]
+    },
+    {
+      id: 4,
+      type: 'content' as const,
+      backgroundImage: '/DSC02837.jpeg',
+      title: t("section4-title"),
+      subtitle: t("section4-subtitle"),
+      content: [
+        t("section4-content1"),
+        t("section4-content2"),
+        t("section4-content3")
+      ],
+      textPosition: 'right' as const,
+      overlayColor: 'bg-neutral-900/70'
+    }
+    // Add more sections...
+  ];
 
   return (
     <>
-<div className="fixed inset-0 w-full h-full bg-gradient-to-b from-black to-neutral-700 -z-20" />
-      <div
-         className={`fixed inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 -z-10 ${showImage ? "opacity-100" : "opacity-0"}`}
-         style={{ backgroundImage: "url('/DSC02789.jpg')" }}
-      />
-      <main className="relative min-h-screen flex flex-col">
-        <div className="relative z-10 flex flex-1 items-start justify-start mr-30 pl-10 pt-20 sm:pt-20 sm:pl-20">
-          <div className=" slide-in-left max-w-xl text-left whitespace-break-spaces relative">
-            <h1 className="text-4xl text-white text-balance font-sans text-start sm:text-end mb-2">
-              {t("title")}
-            </h1>
-            <p className="text-lg mb-2 text-white font-sans text-start sm:text-end">
-              {t("subtitle")}
-            </p>
-            <p className="text-xs mb-2 text-white font-sans text-start sm:text-end">
-              {t("bio1")}
-            </p>
-            <p className="text-xs mb-2 text-white font-sans text-start sm:text-end">
-              {t("bio2")}
-            </p>
-          </div>
-        </div>
-      </main>
+      {sectionsData.map((section) => (
+        <Section
+          key={section.id}
+          id={section.id}
+          backgroundImage={section.backgroundImage}
+          images={section.images}
+          title={section.title}
+          subtitle={section.subtitle}
+          content={section.content}
+          textPosition={section.textPosition}
+          overlay={section.overlay}
+          overlayColor={section.overlayColor}
+          type={section.type}
+        />
+      ))}
     </>
   );
 }
