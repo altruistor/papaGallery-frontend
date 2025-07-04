@@ -133,7 +133,7 @@ export default function Section({
       )}
 
       {/* Gallery Layout - Only for gallery type */}
-      {type === 'gallery' && (
+{type === 'gallery' && (
         <>
           {/* Gallery Title */}
           <div className="relative z-10 flex items-center justify-center pt-20 pb-10">
@@ -197,7 +197,7 @@ export default function Section({
           
           
           
-          {type === 'fullscreen-gallery' && (
+{type === 'fullscreen-gallery' && (
   <>
     {/* Title overlay */}
     <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-black/70 to-transparent pt-20 pb-10">
