@@ -22,7 +22,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
       <div className="slide-in-left w-full max-w-2xl text-center pl-4 pr-4">
         <p>{t("gallery-page.subtitle")}</p>
       </div>
-      <div className="mt-8 w-full max-w-4xl">
+      <div className="mt-8 w-full max-w-6xl">
         <Gallery images={images} apiUrl={apiUrl} />
       </div>
     </main>

@@ -115,22 +115,22 @@ export default function Section({
 
       {/* Content - Different layout based on type */}
       {type !== 'gallery' && (
-        <div className={`relative z-10 flex flex-1 ${getTextAlignment()} p-10 pt-20`}>
-          <div className={`${getTextStyle()} ${textColor} transform transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}>
-            <h1 className={`${getTextSize()} mb-4 font-sans`}>{title}</h1>
-            {subtitle && (
-              <h2 className="text-xl mb-6 font-sans">{subtitle}</h2>
-            )}
-            {content.map((paragraph, index) => (
-              <p key={index} className="text-sm mb-4 font-sans">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
+  <div className={`relative z-10 flex flex-1 ${getTextAlignment()} p-10 pt-20`}>
+    <div className={`${getTextStyle()} ${textColor} transform transition-all duration-1000 delay-300 ${
+      isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+    }`}>
+      <h1 className={`${getTextSize()} mb-4 font-sans`}>{title}</h1>
+      {subtitle && (
+        <h2 className="mb-6">{subtitle}</h2>
       )}
+      {content.map((paragraph, index) => (
+        <p key={index} className="text-sm mb-4 font-sans">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* Gallery Layout - Only for gallery type */}
 {type === 'gallery' && (

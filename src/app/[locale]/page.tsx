@@ -12,8 +12,9 @@ export default function HomePage() {
       type: 'hero' as const,
       backgroundImage: '/DSC02789.jpg',
       title: t("title"),
+      subtitle: t("subtitle"), // Move subtitle here - this will be h2
       textPosition: 'left' as const,
-      content: [t("subtitle"), t("bio1"), t("bio2")],
+      content: [t("bio1"), t("bio2")], // Remove subtitle from content - these will be p tags
       overlay: false
     },
     {
