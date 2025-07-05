@@ -1,6 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Section from "../../../components/HomeSection";
+import Footer from "../../../components/Footer";
 
 export default function HomePage() {
   const t = useTranslations("home-page");
@@ -50,6 +51,7 @@ export default function HomePage() {
       textPosition: 'right' as const,
       overlayColor: 'bg-neutral-900/70'
     }
+
     // Add more sections...
   ];
 
@@ -68,8 +70,10 @@ export default function HomePage() {
           overlay={section.overlay}
           overlayColor={section.overlayColor}
           type={section.type}
+          
         />
       ))}
+
     </>
   );
 }

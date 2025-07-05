@@ -73,7 +73,7 @@ const AnimatedCard = ({
         onClick={onClick}
       />
       <div className="w-full px-4 py-2 bg-gray-100">
-        <div className="font-semibold text-base text-gray-800 text-center">
+        <div className="text-base text-gray-800 text-center">
           {img.alt}
         </div>
       </div>
@@ -203,8 +203,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
 </button>
 )}
           {/* Close button */}
-          <button
-  className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
+          <button className="absolute top-6 right-8 text-white text-3xl font-bold bg-black/40 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition"
   onClick={(e) => {
     e.stopPropagation();
 
@@ -212,7 +211,22 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   }}
   aria-label="Close"
 >
-  &times;
+<span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="h-5 w-5"
+          >
+            <path
+              // stroke-linecap="round"
+              // stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </span>
 </button>
 
          
