@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Section from "../../../components/HomeSection";
-import Footer from "../../../components/Footer";
+
 
 export default function HomePage() {
   const t = useTranslations("home-page");
