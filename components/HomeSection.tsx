@@ -125,7 +125,7 @@ export default function Section({
         <h2 className="mb-6">{subtitle}</h2>
       )}
       {content.map((paragraph, index) => (
-        <p key={index} className="text-sm mb-4 font-sans">
+        <p key={index} className="text-sm mb-1 font-sans">
           {paragraph}
         </p>
       ))}
