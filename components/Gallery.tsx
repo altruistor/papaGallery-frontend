@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import "react-medium-image-zoom/dist/styles.css";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import Zoom from "react-medium-image-zoom";
 
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -230,25 +231,27 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
 </button>
 
          
-            <Image
-              src={filteredImages[selectedIndex].fullUrl}
-              alt={filteredImages[selectedIndex].alt || filteredImages[selectedIndex].title}
-              width={1920}
-              height={1080}
-              className={`max-h-[80vh] rounded shadow-lg transition-transform duration-300`}
-              style={{
-                width: "auto",
-                height: "auto",
-                maxWidth: "100%",
-                maxHeight: "80vh",
-                display: "block",
-                margin: "0 auto",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-
-              }}
-            />
+            <Zoom>
+              <Image
+                src={filteredImages[selectedIndex].fullUrl}
+                alt={filteredImages[selectedIndex].alt || filteredImages[selectedIndex].title}
+                width={1920}
+                height={1080}
+                className={`max-h-[80vh] max-w-[90vw] rounded shadow-lg transition-transform duration-300`}
+                style={{
+                  width: "auto",
+                  height: "auto",
+                  maxWidth: "90vw",
+                  maxHeight: "80vh",
+                  display: "block",
+                  margin: "0 auto",
+                  objectFit: "contain"
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              />
+            </Zoom>
        
           <div className="mt-4 text-white text-sm max-w-2xl text-center px-4">
           {filteredImages[selectedIndex].description}

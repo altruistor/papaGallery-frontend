@@ -89,7 +89,7 @@ const MaterialsPage = () => {
   {pdfUrl ? (
     <>
       <Button asLink href={pdfUrl} variant="primary">
-        Открыть PDF
+        PDF
       </Button>
       <Button
   onClick={() => {
