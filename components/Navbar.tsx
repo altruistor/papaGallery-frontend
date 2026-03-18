@@ -100,7 +100,7 @@ const BirdAnimation = () => {
     const t = useTranslations("nav");
   
     return (
-      <nav className="slide-in-top fixed top-0 w-full bg-white/60 backdrop-blur-md shadow z-50">
+      <nav className="fixed top-0 w-full bg-white/60 backdrop-blur-md shadow z-50">
         <div className="max-w-4xl mx-auto flex items-center h-16">
           <div className="flex space-x-5 sm:space-x-7 items-center justify-center sm:justify-end w-full sm:pr-6 font-sans text-xs sm:text-sm uppercase">
             <Link

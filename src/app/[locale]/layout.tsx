@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import "../globals.css";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import PageShell from "../../../components/PageShell";
 
 
 export const metadata: Metadata = {
@@ -28,7 +29,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <Navbar />
-      {children}
+      <PageShell>
+        {children}
+      </PageShell>
       <Footer />
     </NextIntlClientProvider>
   );
