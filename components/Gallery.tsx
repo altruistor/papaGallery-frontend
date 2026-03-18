@@ -44,14 +44,8 @@ const AnimatedCard = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={skipAnimation ? false : { opacity: 0, y: 40 }}
-      animate={skipAnimation || isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-    >
+  const cardContent = (
+    <>
       <Image
         width={400}
         height={300}
@@ -61,10 +55,32 @@ const AnimatedCard = ({
         onClick={onClick}
       />
       <div className="w-full px-4 py-2 bg-gray-100">
-        <div className="text-base text-gray-800 text-center">
-          {img.alt}
-        </div>
+        <div className="text-base text-gray-800 text-center">{img.alt}</div>
       </div>
+    </>
+  );
+
+  if (skipAnimation) {
+    return (
+      <div
+        className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+        onClick={onClick}
+      >
+        {cardContent}
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+      onClick={onClick}
+    >
+      {cardContent}
     </motion.div>
   );
 };
