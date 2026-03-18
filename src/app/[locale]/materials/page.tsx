@@ -14,7 +14,8 @@ const MaterialsPage = () => {
 
   const t = useTranslations("materials-page");
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  // Use proxy path — no CORS, Strapi URL not exposed to browser
+  const apiUrl = '/strapi';
 
   useEffect(() => {
     fetch(`${apiUrl}/api/materials?populate=pdfDocument`)
@@ -65,7 +66,11 @@ const MaterialsPage = () => {
             
             const { id, Name, Description, pdfDocument, publishedAt } = material;
             const pdf = pdfDocument?.[0] as PdfDocument | undefined;
-            const pdfUrl = pdf?.url ? `${apiUrl}${pdf.url}` : null;
+            const pdfUrl = pdf?.url
+              ? pdf.url.startsWith('http')
+                ? pdf.url
+                : `${apiUrl}${pdf.url}`
+              : null;
 
               return (
                 <div

@@ -22,10 +22,8 @@ export default async function LocaleLayout({
   try {
     messages = (await import(`../../lang/${locale}.json`)).default;
   } catch {
-    // Optionally handle missing locale/messages
+    // fallback to empty messages if locale file is missing
   }
-
-  console.log("Loaded locale/messages:", locale, messages);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

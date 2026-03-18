@@ -94,7 +94,7 @@ export default function Section({
   return (
     <SectionTag 
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col scroll-section"
+      className="relative min-h-screen flex flex-col scroll-section overflow-hidden"
       data-section-id={id}
     >
       {/* Background Image */}

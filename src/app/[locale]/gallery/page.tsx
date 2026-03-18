@@ -2,17 +2,23 @@ import Gallery from "../../../../components/Gallery";
 import { getTranslations } from "next-intl/server";
 
 async function getImages(apiUrl: string, locale: string) {
-  const res = await fetch(`${apiUrl}/api/gallery-images?populate=Image&locale=${locale}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data.data;
+  try {
+    const res = await fetch(`${apiUrl}/api/gallery-images?populate=Image&locale=${locale}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.data ?? [];
+  } catch {
+    return [];
+  }
 }
 
 export default async function GalleryPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
-  const images = await getImages(apiUrl, locale);
+  // Server-side fetch uses direct Strapi URL (no CORS on server)
+  const strapiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL!;
+  const images = await getImages(strapiUrl, locale);
 
   const t = await getTranslations({ locale });
 
@@ -23,7 +29,8 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
         <p>{t("gallery-page.subtitle")}</p>
       </div>
       <div className="mt-8 w-full max-w-6xl">
-        <Gallery images={images} apiUrl={apiUrl} />
+        {/* Pass proxy prefix so client-side image URLs go through Next.js */}
+        <Gallery images={images} apiUrl="/strapi" />
       </div>
     </main>
   );

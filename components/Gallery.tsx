@@ -170,10 +170,8 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 bg-gray-700 bg-opacity-60 flex flex-col items-center justify-center z-50"
-
-
-                  
-              >
+          onClick={() => setSelectedIndex(null)}
+        >
                   
                   {/* Left Arrow */}
                   {selectedIndex > 0 && (
