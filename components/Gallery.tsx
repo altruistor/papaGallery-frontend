@@ -35,20 +35,20 @@ type GalleryImage = {
 const AnimatedCard = ({
   img,
   onClick,
+  skipAnimation,
 }: {
   img: GalleryImage;
   onClick: () => void;
+  skipAnimation?: boolean;
 }) => {
   const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-50px" });
-    
-
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      initial={skipAnimation ? false : { opacity: 0, y: 40 }}
+      animate={skipAnimation || isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
     >
@@ -158,6 +158,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
               key={img.id}
               img={img}
               onClick={() => setSelectedIndex(idx)}
+              skipAnimation={cached}
             />
           ) : null
         )}
