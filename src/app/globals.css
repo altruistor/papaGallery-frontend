@@ -33,6 +33,7 @@ body {
     var(--font-geist-sans),
     system-ui,
     sans-serif;
+  overflow-x: hidden; /* slide-in-right стартует за краем — без этого появляется горизонтальный скроллбар */
 }
 
 
