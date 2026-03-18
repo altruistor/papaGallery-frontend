@@ -7,7 +7,8 @@ import Image from "next/image";
 import Zoom from "react-medium-image-zoom";
 
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useGalleryStore, type GalleryImageApiItem } from "../src/store/galleryStore";
 
 type GalleryProps = {
   images: GalleryImageApiItem[];
@@ -24,21 +25,7 @@ type GalleryImage = {
   fullUrl: string;
 };
 
-type GalleryImageApiItem = {
-  id: number;
-  Name: string;
-  Alt: string;
-  Description: string;
-  Category: string;
-  Image?: {
-    url?: string;
-    formats?: {
-      medium?: {
-        url?: string;
-      };
-    };
-  };
-};
+// локальный тип убран — используем импортированный GalleryImageApiItem из стора
 
 
 
@@ -83,10 +70,21 @@ const AnimatedCard = ({
 };
 
 const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
-  // Convert API images to GalleryImage[]
   const t = useTranslations();
+  const locale = useLocale();
+  const { images: storedImages, setImages, hasImages } = useGalleryStore();
 
-  const images: GalleryImage[] = apiImages.map((item) => ({
+  // При первом рендере — сохраняем в стор. При повторных — берём из стора.
+  const cached = hasImages(locale);
+  const sourceImages: GalleryImageApiItem[] = cached ? storedImages[locale] : apiImages;
+
+  useEffect(() => {
+    if (!cached && apiImages.length > 0) {
+      setImages(locale, apiImages);
+    }
+  }, [locale, apiImages, cached, setImages]);
+
+  const images: GalleryImage[] = sourceImages.map((item) => ({
     id: item.id,
     title: item.Name,
     alt: item.Alt,
