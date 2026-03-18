@@ -1,11 +1,11 @@
 import Gallery from "../../../../components/Gallery";
 import { getTranslations } from "next-intl/server";
 
+export const revalidate = 3600; // повторно запрашивать у Strapi не чаще раза в час
+
 async function getImages(apiUrl: string, locale: string) {
   try {
-    const res = await fetch(`${apiUrl}/api/gallery-images?populate=Image&locale=${locale}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${apiUrl}/api/gallery-images?populate=Image&locale=${locale}`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.data ?? [];
