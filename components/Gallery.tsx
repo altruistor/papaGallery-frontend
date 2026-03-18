@@ -72,10 +72,11 @@ const AnimatedCard = ({
 const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   const t = useTranslations();
   const locale = useLocale();
-  const { images: storedImages, setImages, hasImages } = useGalleryStore();
+  const { images: storedImages, setImages, hasImages, animated, markAnimated } = useGalleryStore();
 
   // При первом рендере — сохраняем в стор. При повторных — берём из стора.
   const cached = hasImages(locale);
+  const hasAnimated = animated[locale] ?? false;
   const sourceImages: GalleryImageApiItem[] = cached ? storedImages[locale] : apiImages;
 
   useEffect(() => {
@@ -83,6 +84,14 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
       setImages(locale, apiImages);
     }
   }, [locale, apiImages, cached, setImages]);
+
+  // После первого воспроизведения анимации — помечаем чтобы больше не играла
+  useEffect(() => {
+    if (!hasAnimated && sourceImages.length > 0) {
+      const timer = setTimeout(() => markAnimated(locale), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [hasAnimated, sourceImages.length, locale, markAnimated]);
 
   const images: GalleryImage[] = sourceImages.map((item) => ({
     id: item.id,
@@ -158,7 +167,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
               key={img.id}
               img={img}
               onClick={() => setSelectedIndex(idx)}
-              skipAnimation={cached}
+              skipAnimation={hasAnimated}
             />
           ) : null
         )}
