@@ -28,13 +28,12 @@ export default function HomePage() {
     },
     {
       id: 3,
-      type: 'fullscreen-gallery' as const,
+      type: 'photo-grid' as const,
       title: '',
       content: [],
       images: [
         { src: '/IMG_3660.jpeg', alt: t("gallery-image1-alt") },
         { src: '/58259.jpeg', alt: t("gallery-image2-alt") }
-
       ]
     },
     {

@@ -18,7 +18,18 @@ async function getImages(apiUrl: string, locale: string) {
 async function GalleryContent({ locale }: { locale: string }) {
   const strapiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL!;
   const images = await getImages(strapiUrl, locale);
-  return <Gallery images={images} apiUrl="/strapi" />;
+  const t = await getTranslations({ locale });
+
+  // Собираем переводы категорий из данных, чтобы не передавать useTranslations в client-компонент
+  const rawCategories = Array.from(new Set(images.map((img: { Category?: string }) => img.Category).filter(Boolean))) as string[];
+  const categoryLabels = Object.fromEntries(
+    rawCategories.map(cat => {
+      try { return [cat, t(`category.${cat.trim()}`)]; }
+      catch { return [cat, cat]; }
+    })
+  );
+
+  return <Gallery images={images} apiUrl="/strapi" locale={locale} allLabel={t("all")} categoryLabels={categoryLabels} />;
 }
 
 function GallerySpinner() {

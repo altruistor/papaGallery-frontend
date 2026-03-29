@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-
+import { motion, useScroll, useTransform } from "framer-motion";
 
 type SectionImage = {
   src: string;
@@ -16,231 +16,190 @@ type SectionProps = {
   title: string;
   subtitle?: string;
   content: string[];
-  textPosition?: 'left' | 'center' | 'right';
+  textPosition?: "left" | "center" | "right";
   textColor?: string;
   overlay?: boolean;
   overlayColor?: string;
-  type?: 'hero' | 'gallery' | 'content' | 'fullscreen-gallery';
-  onVisible?: (id: number) => void;
+  type?: "hero" | "content" | "photo-grid";
 };
 
-export default function Section({
-  id,
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+// Fullscreen, фон с zoom-out при загрузке, текст slide-in слева
+function HeroSection({
   backgroundImage,
-  images = [],
   title,
   subtitle,
   content,
-  textPosition = 'center',
-  textColor = 'text-white',
-  overlay = true,
-  overlayColor = 'bg-black/50',
-  type = 'content',
-  onVisible
+  textColor = "text-white",
 }: SectionProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          onVisible?.(id);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [id, onVisible]);
-
-  const getTextAlignment = () => {
-    switch (textPosition) {
-      case 'left': return 'items-start justify-start pl-10 sm:pl-20';
-      case 'right': return 'items-start justify-end pr-10 sm:pr-20';
-      default: return 'items-center justify-center';
-    }
-  };
-
-  const getTextStyle = () => {
-    switch (textPosition) {
-      case 'left': return 'text-left max-w-xl';
-      case 'right': return 'text-right max-w-xl';
-      default: return 'text-center max-w-2xl';
-    }
-  };
-
-  // Use type to determine section behavior
-  const getTextSize = () => {
-    switch (type) {
-      case 'hero': return 'text-4xl sm:text-5xl';
-      case 'gallery': return 'text-3xl';
-      case 'fullscreen-gallery': return 'text-2xl';
-      default: return 'text-3xl';
-    }
-  };
-
-  const getSectionTag = () => {
-    return type === 'hero' ? 'main' : 'section';
-  };
-
-  const SectionTag = getSectionTag() as 'main' | 'section';
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
 
   return (
-    <SectionTag 
-      ref={sectionRef}
-      className="relative min-h-screen flex flex-col scroll-section overflow-hidden"
-      data-section-id={id}
-    >
-      {/* Background Image */}
+    <main className="relative h-screen flex items-end overflow-hidden">
       {backgroundImage && (
-        <div 
-          className={`absolute inset-0 w-full h-full bg-center bg-cover transition-all duration-1500 ${
-            isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
+        <div
+          className={`absolute inset-0 bg-center bg-cover transition-transform duration-[2000ms] ease-out ${
+            ready ? "scale-100" : "scale-110"
           }`}
           style={{ backgroundImage: `url('${backgroundImage}')` }}
         />
       )}
-
-      {/* Overlay */}
-      {overlay && (
-        <div className={`absolute inset-0 w-full h-full ${overlayColor} transition-opacity duration-1000 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`} />
-      )}
-
-      {/* Content - Different layout based on type */}
-      {type !== 'gallery' && (
-  <div className={`relative z-10 flex flex-1 ${getTextAlignment()} p-10 pt-20`}>
-    <div className={`${getTextStyle()} ${textColor} transform transition-all duration-1000 delay-300 ${
-      isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-    }`}>
-      <h1 className={`${getTextSize()} mb-4 font-sans`}>{title}</h1>
-      {subtitle && (
-        <h2 className="mb-6">{subtitle}</h2>
-      )}
-      {content.map((paragraph, index) => (
-        <p key={index} className="text-sm mb-1 font-sans">
-          {paragraph}
-        </p>
-      ))}
-    </div>
-  </div>
-)}
-
-      {/* Gallery Layout - Only for gallery type */}
-{type === 'gallery' && (
-        <>
-          {/* Gallery Title */}
-          <div className="relative z-10 flex items-center justify-center pt-20 pb-10">
-            <div className={`text-center ${textColor} transform transition-all duration-1000 delay-300 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            }`}>
-              <h1 className="text-3xl mb-4 font-sans">{title}</h1>
-              {subtitle && (
-                <h2 className="text-xl mb-6 font-sans">{subtitle}</h2>
-              )}
-            </div>
-          </div>
-
-          {/* Images Grid */}
-          {images.length > 0 && (
-            <div className={`relative z-10 flex-1 flex items-center justify-center transition-all duration-1000 delay-500 ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-10 max-w-6xl">
-                {images.map((image, index) => (
-                  <div key={index} className={`transform transition-all duration-700 ${
-                    isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-                  }`} style={{ transitionDelay: `${(index + 1) * 200}ms` }}>
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={400}
-                      height={300}
-                      className={`rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ${image.className || ''}`}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Floating Images for content sections */}
-      {type === 'content' && images.length > 0 && (
-        <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 delay-500 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-10 max-w-4xl">
-            {images.map((image, index) => (
-              <div key={index} className={`transform transition-all duration-700 ${
-                isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-              }`} style={{ transitionDelay: `${(index + 1) * 200}ms` }}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={400}
-                  height={300}
-                  className={`rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ${image.className || ''}`}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-          )}
-          
-          
-          
-{type === 'fullscreen-gallery' && (
-  <>
-    {/* Title overlay */}
-    <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-black/70 to-transparent pt-20 pb-10">
-      <div className={`text-center ${textColor} transform transition-all duration-1000 delay-300 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-      }`}>
-        <h1 className="text-2xl mb-2 font-sans">{title}</h1>
+      <div className={`relative z-10 p-10 sm:p-20 pb-16 max-w-xl ${textColor}`}>
+        <motion.h1
+          className="text-4xl sm:text-5xl font-sans mb-4"
+          initial={{ opacity: 0, x: -40 }}
+          animate={ready ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 1, delay: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          {title}
+        </motion.h1>
         {subtitle && (
-          <h2 className="text-lg mb-4 font-sans">{subtitle}</h2>
-        )}
-      </div>
-    </div>
-
-    {/* Fullscreen Images Grid */}
-    {images.length > 0 && (
-      <div className={`absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 transition-all duration-1000 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}>
-        {images.map((image, index) => (
-          <div 
-            key={index} 
-            className={`relative overflow-hidden transform transition-all duration-1000 ${
-              isVisible ? 'scale-100 opacity-100' : 'scale-105 opacity-0'
-            }`}
-            style={{ transitionDelay: `${index * 200}ms` }}
+          <motion.h2
+            className="font-sans mb-4"
+            initial={{ opacity: 0, x: -40 }}
+            animate={ready ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1, delay: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
           >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover hover:scale-110 transition-transform duration-700"
-              sizes="(max-width: 768px) 50vw, 25vw"
-            />
-            {/* Optional overlay on hover */}
-            <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300" />
-          </div>
+            {subtitle}
+          </motion.h2>
+        )}
+        {content.map((p, i) => (
+          <motion.p
+            key={i}
+            className="text-sm font-sans mb-1"
+            initial={{ opacity: 0, x: -40 }}
+            animate={ready ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1, delay: 0.9 + i * 0.1, ease: [0.22, 0.61, 0.36, 1] }}
+          >
+            {p}
+          </motion.p>
         ))}
       </div>
-    )}
-  </>
-)}
-
-    </SectionTag>
+    </main>
   );
+}
+
+// ── Content ───────────────────────────────────────────────────────────────────
+// Parallax-фон + текст появляется при скролле
+function ContentSection({
+  backgroundImage,
+  title,
+  subtitle,
+  content,
+  textPosition = "center",
+  textColor = "text-white",
+  overlay = true,
+  overlayColor = "bg-black/50",
+}: SectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  // фон движется медленнее чем контент → parallax (±30% для заметного эффекта)
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const alignClass =
+    textPosition === "left"
+      ? "items-start pl-10 sm:pl-20"
+      : textPosition === "right"
+      ? "items-end pr-10 sm:pr-20"
+      : "items-center";
+  const textAlignClass =
+    textPosition === "left" ? "text-left" : textPosition === "right" ? "text-right" : "text-center";
+
+  return (
+    <section ref={sectionRef} className="relative min-h-[90vh] flex items-center py-32" style={{ isolation: "isolate" }}>
+      {/* Клип-враппер: overflow-hidden здесь, чтобы parallax выходил за пределы фона но не вызывал скроллбар */}
+      <div className="absolute inset-0 overflow-hidden">
+        {backgroundImage && (
+          <motion.div
+            className="absolute inset-[-20%] bg-center bg-cover"
+            style={{ backgroundImage: `url('${backgroundImage}')`, y: bgY }}
+          />
+        )}
+        {overlay && <div className={`absolute inset-0 ${overlayColor}`} />}
+      </div>
+
+      <div className={`relative z-10 flex w-full flex-col ${alignClass} px-6`}>
+        <motion.div
+          className={`max-w-xl ${textColor} ${textAlignClass}`}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
+        >
+          {title && <h2 className="text-3xl font-sans mb-4">{title}</h2>}
+          {subtitle && <h3 className="font-sans mb-4">{subtitle}</h3>}
+          {content.map((p, i) => (
+            <p key={i} className="text-sm font-sans mb-2">{p}</p>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ── Photo Grid ────────────────────────────────────────────────────────────────
+// Две (или больше) фотографии в ряд, fade+scale при появлении
+function PhotoGridSection({ images = [] }: SectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-black">
+      <div className="grid grid-cols-2">
+        {images.map((img, i) => (
+          <motion.div
+            key={i}
+            className="relative aspect-[3/4] overflow-hidden"
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 1.1, delay: i * 0.25, ease: [0.22, 0.61, 0.36, 1] }}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-700"
+              sizes="50vw"
+            />
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Dispatcher ────────────────────────────────────────────────────────────────
+export default function Section(props: SectionProps) {
+  switch (props.type) {
+    case "hero":
+      return <HeroSection {...props} />;
+    case "photo-grid":
+      return <PhotoGridSection {...props} />;
+    default:
+      return <ContentSection {...props} />;
+  }
 }
