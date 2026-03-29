@@ -76,7 +76,9 @@ const AnimatedCard = ({
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.8,
+                delay: 0.5,
+                ease: [0, 0.71, 0.2, 1.01], }}
       className="mb-4 break-inside-avoid flex flex-col items-center bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
       onClick={onClick}
     >
@@ -160,7 +162,7 @@ const Gallery = ({ images: apiImages, apiUrl }: GalleryProps) => {
   return (
     <>
       {/* Category Filter */}
-      <div className="slide-in-right flex flex-wrap gap-2 mb-6 justify-center">
+      <div className="slide-in-bottom flex flex-wrap gap-2 mb-6 justify-center">
         {categories.map((category) => (
           <button
             key={category}
