@@ -5,28 +5,35 @@ import { useEffect, useRef, useState } from "react";
 export default function PageShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Кэш страниц по pathname — держим в DOM, не размонтируем
-  const [cache, setCache] = useState<Record<string, React.ReactNode>>(() => ({
-    [pathname]: children,
-  }));
-
-  // Следим за уже посещёнными путями (ref, не state — не вызывает ре-рендер)
-  const seenPaths = useRef<Set<string>>(new Set([pathname]));
+  // Кэш только для уже посещённых страниц (не текущей)
+  // Текущая страница всегда рендерится через children напрямую — иначе Suspense/streaming не работает
+  const [prevCache, setPrevCache] = useState<Record<string, React.ReactNode>>({});
+  const prevPathname = useRef<string | null>(null);
+  const prevChildren = useRef<React.ReactNode>(null);
 
   useEffect(() => {
-    seenPaths.current.add(pathname);
-    // Обновляем контент текущей страницы (или добавляем новую)
-    setCache(prev => ({ ...prev, [pathname]: children }));
+    // Когда pathname меняется — сохраняем предыдущую страницу в кэш
+    if (prevPathname.current && prevPathname.current !== pathname && prevChildren.current) {
+      const key = prevPathname.current;
+      const node = prevChildren.current;
+      setPrevCache(prev => ({ ...prev, [key]: node }));
+    }
+    prevPathname.current = pathname;
+    prevChildren.current = children;
   }, [pathname, children]);
 
   return (
     <>
-      {Object.entries(cache).map(([path, node]) => (
-        // hidden=true → display:none, но компонент остаётся смонтированным в React-дереве
-        <div key={path} hidden={path !== pathname ? true : undefined}>
+      {/* Скрытые кэшированные предыдущие страницы — остаются смонтированными */}
+      {Object.entries(prevCache).map(([path, node]) => (
+        <div key={path} hidden>
           {node}
         </div>
       ))}
+      {/* Текущая страница рендерится напрямую — Suspense и streaming работают корректно */}
+      <div key={pathname}>
+        {children}
+      </div>
     </>
   );
 }
