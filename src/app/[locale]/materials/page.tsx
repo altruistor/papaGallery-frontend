@@ -67,7 +67,6 @@ function MaterialsSpinner() {
 }
 
 async function MaterialsContent({ locale }: { locale: string }) {
-  const t = await getTranslations({ locale, namespace: "materials-page" });
   const materials = await getMaterials();
   const strapiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "";
 
