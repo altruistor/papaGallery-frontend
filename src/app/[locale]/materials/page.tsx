@@ -66,7 +66,7 @@ function MaterialsSpinner() {
   );
 }
 
-async function MaterialsContent({ locale }: { locale: string }) {
+async function MaterialsContent() {
   const materials = await getMaterials();
   const strapiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -132,7 +132,7 @@ export default async function MaterialsPage({
         <p>{t("subtitle")}</p>
       </div>
       <Suspense fallback={<MaterialsSpinner />}>
-        <MaterialsContent locale={locale} />
+        <MaterialsContent />
       </Suspense>
     </main>
   );
